@@ -70,38 +70,34 @@ def registro(page: ft.Page):
     return ft.View(
         route="/sesion",
         controls=[
-            ft.Card(
-                ft.Container(
-                    ft.Column(
-                        [
-                            ft.Text("Registrate", size=20, weight=ft.FontWeight.W_600, margin=ft.Margin(bottom=20)),
-                            nombre,
-                            alert_nombre,
-                            email,
-                            alert_email,
-                            passw,
-                            alert_passw,
-                            ft.Button(
-                                ft.Text("Registrate", color=ft.Colors.WHITE),
-                                bgcolor=ft.Colors.BLUE_500,
-                                width=300,
-                                style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5)),
-                                margin=ft.Margin(top=25),
-                                on_click=lambda _: registrateClick()
-                            ),
-                            ft.TextButton(
-                                ft.Text("Ya tengo una cuenta", color=ft.Colors.ON_SURFACE),
-                                width=300,
-                                style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5)),
-                                margin=ft.Margin(top=5),
-                                on_click=lambda _: page.go("/sesion")
-                            )
-                        ],
-                        horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-                        spacing=0
+            ft.Column(
+                [
+                    ft.Image("assets/images/onyx_logo.jpg"),
+                    ft.Text("Registrate", size=20, weight=ft.FontWeight.BOLD, margin=ft.Margin(bottom=20)),
+                    nombre,
+                    alert_nombre,
+                    email,
+                    alert_email,
+                    passw,
+                    alert_passw,
+                    ft.Button(
+                        ft.Text("Registrate", color=ft.Colors.BLACK),
+                        bgcolor=ft.Colors.AMBER_ACCENT,
+                        width=300,
+                        style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5)),
+                        margin=ft.Margin(top=25),
+                        on_click=lambda _: registrateClick()
                     ),
-                    padding=18
-                )
+                    ft.TextButton(
+                        ft.Text("Ya tengo una cuenta", color=ft.Colors.ON_SURFACE),
+                        width=300,
+                        style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5)),
+                        margin=ft.Margin(top=5),
+                        on_click=lambda _: page.go("/sesion")
+                    )
+                ],
+                horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                spacing=0
             )
         ],
         vertical_alignment=ft.MainAxisAlignment.CENTER

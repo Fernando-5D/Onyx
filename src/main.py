@@ -5,7 +5,7 @@ from views.dashboard import dashboard
 from views.usuario import usuario
 
 def main(page: ft.Page):
-    page.title = "PAEC"
+    page.title = "Onyx"
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
     page.window.width = 350

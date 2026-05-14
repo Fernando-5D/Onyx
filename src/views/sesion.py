@@ -2,7 +2,7 @@ import flet as ft
 from controllers.usuarioCtrl import UsuarioCtrl
 
 def sesion(page: ft.Page):
-    email = ft.TextField(label="Correo Electrónico", keyboard_type=ft.KeyboardType.EMAIL)
+    email = ft.TextField(label="Correo Electronico", keyboard_type=ft.KeyboardType.EMAIL)
     alert_email = ft.Row(
         [
             ft.Icon(ft.Icons.ERROR_OUTLINE, size=12, color=ft.Colors.ERROR),
@@ -54,36 +54,33 @@ def sesion(page: ft.Page):
     return ft.View(
         route="/sesion",
         controls=[
-            ft.Card(
-                ft.Container(
-                    ft.Column(
-                        [
-                            ft.Text("Iniciar Sesión", size=20, weight=ft.FontWeight.W_600, margin=ft.Margin(bottom=20)),
-                            email,
-                            alert_email,
-                            passw,
-                            alert_passw,
-                            ft.Button(
-                                ft.Text("Entrar", color=ft.Colors.WHITE),
-                                bgcolor=ft.Colors.BLUE_500,
-                                width=300,
-                                style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5)),
-                                margin=ft.Margin(top=25),
-                                on_click=lambda _: entrarClick()
-                            ),
-                            ft.TextButton(
-                                ft.Text("No tengo una cuenta", color=ft.Colors.ON_SURFACE),
-                                width=300,
-                                style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5)),
-                                margin=ft.Margin(top=5),
-                                on_click=lambda _: page.go("/registro")
-                            )
-                        ],
-                        horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-                        spacing=0
+            ft.Column(
+                [
+                    ft.Image("assets/images/onyx_logo.jpg"),
+                    ft.Text("Iniciar Sesión", size=20, weight=ft.FontWeight.BOLD, margin=ft.Margin(bottom=20)),
+                    email,
+                    alert_email,
+                    passw,
+                    alert_passw,
+                    ft.Button(
+                        ft.Text("Entrar", color=ft.Colors.BLACK),
+                        bgcolor=ft.Colors.AMBER_ACCENT,
+                        width=300,
+                        style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5)),
+                        margin=ft.Margin(top=25),
+                        on_click=lambda _: entrarClick()
                     ),
-                    padding=18
-                )
+                    ft.TextButton(
+                        ft.Text("No tengo una cuenta", color=ft.Colors.ON_SURFACE),
+                        width=300,
+                        style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5)),
+                        margin=ft.Margin(top=5),
+                        on_click=lambda _: page.go("/registro")
+                    )
+                ],
+                margin=ft.Margin(1),
+                horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                spacing=0
             )
         ],
         vertical_alignment=ft.MainAxisAlignment.CENTER

@@ -33,7 +33,7 @@ def dashboard(page: ft.Page):
         controls=[
             ft.AppBar(
                 title=ft.Text(
-                    "Classbook",
+                    "Onyx",
                     weight=ft.FontWeight.W_700
                 ),
                 actions=[
@@ -53,32 +53,7 @@ def dashboard(page: ft.Page):
             ),
             ft.Column(
                 [
-                    ft.Container(
-                        ft.Column(
-                            [
-                                ft.Image("assets/images/cetis.png"),
-                                ft.Text(
-                                    "¡Qué gusto tenerte aquí! Este espacio está pensado para ti, para que descubras cómo pequeños cambios en tu alimentación, tu actividad física y tu descanso pueden transformar tu energía y tu rendimiento académico.\n\nCon la interfaz: cada sección trae tips, retos y recursos que te ayudarán a construir hábitos más sanos de manera divertida.\n\nRecuerda: tu salud es tu mejor herramienta para alcanzar tus metas.",
-                                    text_align=ft.TextAlign.CENTER
-                                )
-                            ],
-                            horizontal_alignment=ft.CrossAxisAlignment.CENTER
-                        ),
-                        bgcolor=ft.Colors.SURFACE_CONTAINER_LOW,
-                        padding=15
-                    ),
-                    ft.Column(
-                        [
-                            ClassButton(
-                                page,
-                                "T. S. Matematicas",
-                                "Comprender que cambios son necesarios para una vida saludable, modificar alimentacion...",
-                                ft.Colors.PINK,
-                                "/mate"
-                            )
-                        ],
-                        margin=ft.Margin(top=10)
-                    )
+                    
                 ],
                 expand=True,
                 scroll=ft.ScrollMode.AUTO
