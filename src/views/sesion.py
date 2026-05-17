@@ -2,7 +2,7 @@ import flet as ft
 from controllers.usuarioCtrl import UsuarioCtrl
 
 def sesion(page: ft.Page):
-    email = ft.TextField(label="Correo Electronico", keyboard_type=ft.KeyboardType.EMAIL)
+    email = ft.TextField(label="Correo Electronico", suffix=".com", keyboard_type=ft.KeyboardType.EMAIL)
     alert_email = ft.Row(
         [
             ft.Icon(ft.Icons.ERROR_OUTLINE, size=12, color=ft.Colors.ERROR),
@@ -21,6 +21,8 @@ def sesion(page: ft.Page):
         margin=ft.Margin(5, 2, bottom=5),
         visible=False
     )
+    
+    alertD_passw = ft.AlertDialog()
     
     def entrarClick():
         alert_email.visible = alert_passw.visible = False
@@ -51,31 +53,49 @@ def sesion(page: ft.Page):
             
         page.update()
     
+    def recuperar_passw():
+        return
+    
     return ft.View(
         route="/sesion",
         controls=[
             ft.Column(
                 [
-                    ft.Image("assets/images/onyx_logo.jpg"),
-                    ft.Text("Iniciar Sesión", size=20, weight=ft.FontWeight.BOLD, margin=ft.Margin(bottom=20)),
+                    ft.Image(
+                        "assets/images/onyx_dark.png" if page.platform_brightness == ft.Brightness.DARK else "assets/images/onyx_light.png",
+                        width=150
+                    ),
+                    ft.Text("Iniciar Sesión", size=20, weight=ft.FontWeight.W_600, margin=ft.Margin(top=35, bottom=20)),
                     email,
                     alert_email,
                     passw,
                     alert_passw,
                     ft.Button(
-                        ft.Text("Entrar", color=ft.Colors.BLACK),
-                        bgcolor=ft.Colors.AMBER_ACCENT,
+                        ft.Text("Entrar", size=15, weight=ft.FontWeight.W_500, color=ft.Colors.WHITE),
+                        bgcolor="#5c71eb",
                         width=300,
-                        style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5)),
+                        style=ft.ButtonStyle(padding=15, shape=ft.RoundedRectangleBorder(radius=5)),
                         margin=ft.Margin(top=25),
                         on_click=lambda _: entrarClick()
                     ),
                     ft.TextButton(
-                        ft.Text("No tengo una cuenta", color=ft.Colors.ON_SURFACE),
+                        ft.Text("No tengo una cuenta", size=15, weight=ft.FontWeight.W_500, color=ft.Colors.ON_SURFACE),
                         width=300,
-                        style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=5)),
+                        style=ft.ButtonStyle(padding=15, shape=ft.RoundedRectangleBorder(radius=5)),
                         margin=ft.Margin(top=5),
                         on_click=lambda _: page.go("/registro")
+                    ),
+                    ft.TextButton(
+                        ft.Text(
+                            "¿Olvidaste tu contraseña?",
+                            size=15,
+                            weight=ft.FontWeight.W_400,
+                            color=ft.Colors.ON_SURFACE
+                        ),
+                        width=300,
+                        style=ft.ButtonStyle(padding=15, shape=ft.RoundedRectangleBorder(radius=5)),
+                        margin=ft.Margin(top=30),
+                        on_click=lambda _: recuperar_passw()
                     )
                 ],
                 margin=ft.Margin(1),
@@ -83,5 +103,6 @@ def sesion(page: ft.Page):
                 spacing=0
             )
         ],
+        horizontal_alignment=ft.CrossAxisAlignment.CENTER,
         vertical_alignment=ft.MainAxisAlignment.CENTER
     )
