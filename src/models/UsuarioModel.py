@@ -51,6 +51,23 @@ class UsuarioModel:
             cursor.close()
             conn.close() # type: ignore
     
+    def eliminar(self, email):
+        try:
+            conn = self.db.get_connection()
+            cursor = conn.cursor() # type: ignore
+            
+            cursor.execute("DELETE FROM usuarios WHERE email = %s", (email,))
+            conn.commit() # type: ignore
+            return True, ""
+        
+        except mysql.connector.Error as err:
+            print(f"Error: {err}")
+            return False, "Hubo un error al intentar eliminar tu cuenta"
+        
+        finally:
+            cursor.close()
+            conn.close() # type: ignore
+    
     def data(self, email, campo = "*"):
         try:
             conn = self.db.get_connection()

@@ -1,15 +1,18 @@
 from pydantic import ValidationError
 from models.UsuarioModel import UsuarioModel
 from models.Database import Database
-from models.schemas import UsuarioBase_Schema, UsuarioRegistro_Schema
+from models.schemas import UsuarioBase_Schema, UsuarioSesion_Schema, UsuarioRegistro_Schema
 
 class UsuarioCtrl:
     def __init__(self):
         self.model = UsuarioModel(Database())
     
+    def obtener_data(self, email, campo):
+        return self.model.data(email, campo)
+    
     def iniciar_sesion(self, email, passw):
         try:
-            data = UsuarioBase_Schema(email=email, passw=passw)
+            data = UsuarioSesion_Schema(email=email, passw=passw)
             is_valid, mensaje = self.model.iniciar_sesion(data.email, data.passw)
             return is_valid, mensaje
             
@@ -20,6 +23,9 @@ class UsuarioCtrl:
             
             elif "passw" in err.errors()[0]['loc']:
                 return False, "La contraseña debe tener entre 8 y 255 caracteres"
+    
+    def recuperar_passw(self, email):
+        return
     
     def registrar(self, nombre, email, passw):
         try:
@@ -37,3 +43,6 @@ class UsuarioCtrl:
             
             elif "passw" in err.errors()[0]['loc']:
                 return False, "La contraseña debe tener entre 8 y 255 caracteres"
+    
+    def eliminar_cuenta(self, email):
+        return self.model.eliminar(email)

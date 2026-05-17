@@ -1,25 +1,10 @@
 import flet as ft
-from controllers.paginaCtrl import PaginaCtrl
+from controllers.usuarioCtrl import UsuarioCtrl
 from views.components.ClassButton import ClassButton
 
 def dashboard(page: ft.Page):
-    def cambiar_tema(e):
-        if page.theme_mode == ft.ThemeMode.SYSTEM:
-            page.theme_mode = ft.ThemeMode.LIGHT
-            e.control.icon = ft.Icons.LIGHT_MODE
-            
-        elif page.theme_mode == ft.ThemeMode.LIGHT:
-            page.theme_mode = ft.ThemeMode.DARK
-            e.control.icon = ft.Icons.DARK_MODE
-            
-        else:
-            page.theme_mode = ft.ThemeMode.SYSTEM
-            e.control.icon = ft.Icons.CONTRAST
-        
-        page.update()
-    
     def obtener_data(email, campo = "*"):
-        return PaginaCtrl().obtener_data(email, campo)
+        return UsuarioCtrl().obtener_data(email, campo)
     
     nombre_usuario = "Usuario"
     if obtener_data(page.session.store.get("user"), "nombre"):
@@ -32,24 +17,31 @@ def dashboard(page: ft.Page):
         route="/dashboard",
         controls=[
             ft.AppBar(
-                title=ft.Text(
-                    "Onyx",
-                    weight=ft.FontWeight.W_700
+                title=ft.Row(
+                    [
+                        ft.Image(
+                            "assets/images/onyx_dark.png" if page.platform_brightness == ft.Brightness.DARK else "assets/images/onyx_light.png",
+                            width=30,
+                            color=ft.Colors.ON_SURFACE
+                        ),
+                        ft.Text("Onyx", weight=ft.FontWeight.W_600, margin=ft.Margin(bottom=0))
+                    ]
                 ),
                 actions=[
                     ft.Row(
                         [
-                            ft.Text(nombre_usuario, size=15, weight=ft.FontWeight.W_500),
+                            ft.Text(nombre_usuario, size=15, weight=ft.FontWeight.W_500, margin=ft.Margin(bottom=1)),
                             ft.IconButton(
                                 ft.Icons.PERSON,
-                                margin=ft.Margin(right=6),
+                                bgcolor=ft.Colors.SURFACE_CONTAINER_LOW,
+                                margin=ft.Margin(10, 1, 15),
                                 on_click=lambda _: page.go("/usuario")
                             )
                         ],
                         spacing=0
                     )
                 ],
-                bgcolor=ft.Colors.SURFACE_CONTAINER_HIGH
+                bgcolor=ft.Colors.SURFACE_CONTAINER
             ),
             ft.Column(
                 [

@@ -1,5 +1,6 @@
 import flet as ft
 from views.sesion import sesion
+from views.recuperar_passw import recuperar_passw
 from views.registro import registro
 from views.dashboard import dashboard
 from views.usuario import usuario
@@ -16,6 +17,9 @@ def main(page: ft.Page):
         page.views.clear()
         if page.route == "/sesion" or page.route == "/":
             page.views.append(sesion(page))
+        
+        elif page.route == "/recuperar_passw":
+            page.views.append(recuperar_passw(page))
         
         elif page.route == "/registro":
             page.views.append(registro(page))
