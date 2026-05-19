@@ -1,6 +1,7 @@
 from pydantic import ValidationError
 from models.UsuarioModel import UsuarioModel
 from models.Database import Database
+from models.emailRe import EmailSender
 from models.schemas import UsuarioBase_Schema, UsuarioSesion_Schema, UsuarioRegistro_Schema
 
 class UsuarioCtrl:
@@ -24,8 +25,21 @@ class UsuarioCtrl:
             elif "passw" in err.errors()[0]['loc']:
                 return False, "La contraseña debe tener entre 8 y 255 caracteres"
     
-    def recuperar_passw(self, email):
-        return
+    def cambiar_passw(self, email, nueva_passw):
+        try:
+            data = UsuarioSesion_Schema(
+                email=email,
+                passw=nueva_passw
+            )
+            return self.model.actualizar_passw(
+                data.email,
+                data.passw
+            )
+
+        except ValidationError as err:
+            print(f"Error de validación: {err}")
+            if "passw" in err.errors()[0]['loc']:
+                return False, "La contraseña debe tener entre 8 y 255 caracteres"
     
     def registrar(self, nombre, email, passw):
         try:

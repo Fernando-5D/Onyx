@@ -1,49 +1,89 @@
 import flet as ft
+import random
 from controllers.usuarioCtrl import UsuarioCtrl
+from models.emailRe import EmailSender
+
+codigo_generado = ""
 
 def recuperar_passw(page: ft.Page):
-    email = ft.TextField(label="Correo Electronico", suffix=".com", keyboard_type=ft.KeyboardType.EMAIL)
-    alert_email = ft.Row(
-        [
-            ft.Icon(ft.Icons.ERROR_OUTLINE, size=12, color=ft.Colors.ERROR),
-            ft.Text("", size=12, color=ft.Colors.ERROR, expand=True)
-        ],
-        margin=ft.Margin(15, 2, bottom=5),
-        visible=False
-    )
-        
-    def recuperar_passwClick():
-        alert_email.visible = False
-        
+    email = ft.TextField(label="Correo Electronico",keyboard_type=ft.KeyboardType.EMAIL)
+
+    codigo = ft.TextField(label="Código")
+    nueva_passw = ft.TextField(label="Nueva contraseña",password=True)
+    alert_email = ft.Text(color=ft.Colors.RED)
+
+    def enviar_codigo():
+        global codigo_generado
+
         if not email.value:
-            alert_email.controls[1].value = "Este campo es obligatorio" # type: ignore
-            alert_email.visible = True
-        
-        if email.value:
-            email_format = f"{email.value}.com"
-            is_valid, mensaje = UsuarioCtrl().recuperar_passw(email_format) # type: ignore
-            if not is_valid:
-                alert_email.controls[1].value = mensaje # type: ignore
-                alert_email.visible = True
-            else:
-                page.go("/sesion")
-            
+            alert_email.value = "Escribe un correo"
+            page.update()
+            return
+
+        codigo_generado = str(random.randint(100000, 999999))
+        enviado = EmailSender.enviar_codigo(email.value,codigo_generado)
+
+        if enviado:
+            alert_email.color = ft.Colors.GREEN
+            alert_email.value = "Código enviado"
+
+        else:
+            alert_email.color = ft.Colors.RED
+            alert_email.value = "Error enviando código"
+
         page.update()
-    
+
+    def cambiar_passw():
+        global codigo_generado
+        if not codigo_generado:
+            alert_email.color = ft.Colors.RED
+            alert_email.value = "Primero envía un código"
+            page.update()
+            return
+        if codigo.value != codigo_generado:
+            alert_email.color = ft.Colors.RED
+            alert_email.value = "Código incorrecto"
+            page.update()
+            return
+
+        is_valid, mensaje = UsuarioCtrl().cambiar_passw(email.value,nueva_passw.value)
+
+        if is_valid:
+            alert_email.color = ft.Colors.GREEN
+            alert_email.value = mensaje
+
+        else:
+            alert_email.color = ft.Colors.RED
+            alert_email.value = mensaje
+
+        page.update()
+
     return ft.View(
         route="/recuperar_passw",
+
         controls=[
-            ft.Text("Recuperar Contraseña", size=20, weight=ft.FontWeight.W_600),
+
             ft.Text(
-                "Escribe tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña.",
-                text_align=ft.TextAlign.LEFT
+                "Recuperar Contraseña",
+                size=20,
+                weight=ft.FontWeight.W_600
             ),
+            
+            ft.TextButton(
+                "Volver a iniciar sesión",
+                on_click=lambda _: page.go("/sesion")
+                ),
+
             email,
+            ft.Button("Enviar codigo",on_click=lambda _: enviar_codigo()
+            ),
+
+            codigo,
+            nueva_passw,
             alert_email,
-            ft.Button("Enviar Enlace", on_click=lambda _: recuperar_passwClick())
-        ],
-        margin=ft.Margin(2),
-        horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-        vertical_alignment=ft.MainAxisAlignment.CENTER,
-        spacing=0
+            ft.Button(
+                "Cambiar contraseña",
+                on_click=lambda _: cambiar_passw()
+            )
+        ]
     )

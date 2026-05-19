@@ -5,6 +5,29 @@ from models.Database import Database
 class UsuarioModel:
     def __init__(self, db: Database):
         self.db = db
+        
+    def actualizar_passw(self, email, nueva_passw):
+        conn = None
+        cursor = None
+        try:
+            conn = self.db.get_connection()
+            cursor = conn.cursor()
+            hashed_passw = bcrypt.hashpw(nueva_passw.encode("utf-8"),bcrypt.gensalt()).decode("utf-8")
+
+            sql = """ UPDATE usuarios SET passw = %s WHERE email = %s """
+            cursor.execute(sql,(hashed_passw, email))
+            conn.commit()
+            return True, "Contraseña actualizada"
+
+        except Exception as e:
+            print(e)
+            return False, "Error actualizando contraseña"
+        finally:
+            if cursor:
+                cursor.close()
+            if conn:
+                conn.close()
+
     
     def iniciar_sesion(self, email, passw):
         try:
