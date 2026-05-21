@@ -21,3 +21,5 @@ La finalidad principal de la aplicación es apoyar a los usuarios en mejorar la 
   Grado = 6-D <br>
   Especialidad = Programacion <br>
   <img width="200" height="200" alt="fotini" src="https://github.com/user-attachments/assets/37117616-f5fd-4680-911b-03388fda27b8" />
+
+  3. ## **Revisiones**
