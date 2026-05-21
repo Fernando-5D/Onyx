@@ -23,3 +23,6 @@ La finalidad principal de la aplicación es apoyar a los usuarios en mejorar la 
   <img width="200" height="200" alt="fotini" src="https://github.com/user-attachments/assets/37117616-f5fd-4680-911b-03388fda27b8" />
 
 3. ## **Revisiones**
+   ### **Revision 1**
+   Fue implementado un registrar la cuenta con las validaciones necesarias, asi como tambien se implemento un login funcional donde          podrias iniciar sesion con la cuenta que creeastes gracias a una base de datos. <br>
+   ### **Revision 2**
