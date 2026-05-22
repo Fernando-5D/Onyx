@@ -1,5 +1,5 @@
 import flet as ft
-from controllers.usuarioCtrl import UsuarioCtrl
+from controllers.UsuarioCtrl import UsuarioCtrl
 
 def usuario(page: ft.Page):
     icon_tema = ft.Icons.CONTRAST

@@ -1,5 +1,5 @@
 import flet as ft
-from controllers.usuarioCtrl import UsuarioCtrl
+from controllers.UsuarioCtrl import UsuarioCtrl
 
 def registro(page: ft.Page):
     nombre = ft.TextField(label="Nombre de Usuario")
@@ -8,22 +8,18 @@ def registro(page: ft.Page):
             ft.Icon(ft.Icons.ERROR_OUTLINE, size=12, color=ft.Colors.ERROR),
             ft.Text("", size=12, color=ft.Colors.ERROR, expand=True)
         ],
+        width=300,
         margin=ft.Margin(15, 2, bottom=5),
         visible=False
     )
     
-    email = ft.TextField(
-        label="Correo Electrónico",
-        suffix=".com",
-        keyboard_type=ft.KeyboardType.EMAIL,
-        margin=ft.Margin(top=10)
-    )
-    
+    email = ft.TextField(label="Correo Electrónico", keyboard_type=ft.KeyboardType.EMAIL, margin=ft.Margin(top=10))
     alert_email = ft.Row(
         [
             ft.Icon(ft.Icons.ERROR_OUTLINE, size=12, color=ft.Colors.ERROR),
             ft.Text("", size=12, color=ft.Colors.ERROR, expand=True)
         ],
+        width=300,
         margin=ft.Margin(15, 2, bottom=5),
         visible=False
     )
@@ -34,6 +30,7 @@ def registro(page: ft.Page):
             ft.Icon(ft.Icons.ERROR_OUTLINE, size=12, color=ft.Colors.ERROR),
             ft.Text("", size=12, color=ft.Colors.ERROR, expand=True)
         ],
+        width=300,
         margin=ft.Margin(15, 2, bottom=5),
         visible=False
     )
@@ -54,8 +51,7 @@ def registro(page: ft.Page):
             alert_passw.visible = True
         
         if nombre.value and email.value and passw.value:
-            email_format = f"{email.value}.com"
-            is_valid, mensaje = UsuarioCtrl().registrar(nombre.value, email_format, passw.value) # type: ignore
+            is_valid, mensaje = UsuarioCtrl().registrar(nombre.value, email.value, passw.value) # type: ignore
             if not is_valid:
                 if "nombre" in mensaje:
                     alert_nombre.controls[1].value = mensaje # type: ignore
@@ -77,11 +73,6 @@ def registro(page: ft.Page):
     return ft.View(
         route="/registro",
         controls=[
-            # ft.Image(
-            #     "assets/images/onyx_dark.png" if page.platform_brightness == ft.Brightness.DARK else "assets/images/onyx_light.png",
-            #     width=125,
-            #     align=ft.Alignment.BOTTOM_CENTER
-            # ),
             ft.Text("Registrate", size=20, weight=ft.FontWeight.W_600, margin=ft.Margin(top=30, bottom=20)),
             nombre,
             alert_nombre,

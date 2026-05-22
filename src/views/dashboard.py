@@ -1,5 +1,5 @@
 import flet as ft
-from controllers.usuarioCtrl import UsuarioCtrl
+from controllers.UsuarioCtrl import UsuarioCtrl
 from views.components.ClassButton import ClassButton
 
 def dashboard(page: ft.Page):

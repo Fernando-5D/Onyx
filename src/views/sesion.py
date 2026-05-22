@@ -1,13 +1,14 @@
 import flet as ft
-from controllers.usuarioCtrl import UsuarioCtrl
+from controllers.UsuarioCtrl import UsuarioCtrl
 
 def sesion(page: ft.Page):
-    email = ft.TextField(label="Correo Electronico", suffix=".com", keyboard_type=ft.KeyboardType.EMAIL)
+    email = ft.TextField(label="Correo Electronico", keyboard_type=ft.KeyboardType.EMAIL)
     alert_email = ft.Row(
         [
             ft.Icon(ft.Icons.ERROR_OUTLINE, size=12, color=ft.Colors.ERROR),
             ft.Text("", size=12, color=ft.Colors.ERROR, expand=True)
         ],
+        width=300,
         margin=ft.Margin(15, 2, bottom=5),
         visible=False
     )
@@ -18,6 +19,7 @@ def sesion(page: ft.Page):
             ft.Icon(ft.Icons.ERROR_OUTLINE, size=12, color=ft.Colors.ERROR),
             ft.Text("", size=12, color=ft.Colors.ERROR, expand=True)
         ],
+        width=300,
         margin=ft.Margin(15, 2),
         visible=False
     )
@@ -34,8 +36,7 @@ def sesion(page: ft.Page):
             alert_passw.visible = True
         
         if email.value and passw.value:
-            email_format = f"{email.value}.com"
-            is_valid, mensaje = UsuarioCtrl().iniciar_sesion(email_format, passw.value) # type: ignore
+            is_valid, mensaje = UsuarioCtrl().iniciar_sesion(email.value, passw.value) # type: ignore
             if not is_valid:
                 if "correo" in mensaje:
                     alert_email.controls[1].value = mensaje # type: ignore
@@ -47,7 +48,7 @@ def sesion(page: ft.Page):
                     alert_email.controls[1].value = alert_passw.controls[1].value = mensaje # type: ignore
                     alert_email.visible = alert_passw.visible = True
             else:
-                page.session.store.set("user", email_format)
+                page.session.store.set("user", email.value)
                 page.go("/dashboard")
             
         page.update()
@@ -55,11 +56,6 @@ def sesion(page: ft.Page):
     return ft.View(
         route="/sesion",
         controls=[
-            # ft.Image(
-            #     "assets/images/onyx_dark.png" if page.platform_brightness == ft.Brightness.DARK else "assets/images/onyx_light.png",
-            #     width=125,
-            #     align=ft.Alignment.BOTTOM_CENTER
-            # ),
             ft.Text("Iniciar Sesión", size=20, weight=ft.FontWeight.W_600, margin=ft.Margin(top=30, bottom=20)),
             email,
             alert_email,
@@ -74,14 +70,14 @@ def sesion(page: ft.Page):
                 on_click=lambda _: entrarClick()
             ),
             ft.TextButton(
-                ft.Text("No tengo una cuenta", size=15, weight=ft.FontWeight.W_500, color=ft.Colors.ON_SURFACE),
+                ft.Text("Crear una cuenta", size=15, weight=ft.FontWeight.W_500, color=ft.Colors.ON_SURFACE),
                 width=300,
                 style=ft.ButtonStyle(bgcolor=ft.Colors.SURFACE_CONTAINER, padding=15, shape=ft.RoundedRectangleBorder(radius=10)),
                 margin=ft.Margin(top=5),
                 on_click=lambda _: page.go("/registro")
             ),
             ft.TextButton(
-                ft.Text("¿Olvidaste tu contraseña?", size=15, weight=ft.FontWeight.W_400, color=ft.Colors.ON_SURFACE),
+                ft.Text("¿Olvidaste tu contraseña?", size=15, weight=ft.FontWeight.W_400, color="#5c71eb"),
                 width=300,
                 style=ft.ButtonStyle(padding=15, shape=ft.RoundedRectangleBorder(radius=10)),
                 margin=ft.Margin(top=30),
