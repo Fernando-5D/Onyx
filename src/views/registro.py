@@ -5,7 +5,7 @@ def registro(page: ft.Page):
     nombre = ft.TextField(label="Nombre de Usuario")
     alert_nombre = ft.Row(
         [
-            ft.Icon(ft.Icons.ERROR_OUTLINE, size=12, color=ft.Colors.ERROR),
+            ft.Icon(ft.Icons.ERROR_OUTLINE, size=12, color=ft.Colors.ERROR, margin=ft.Margin(top=2)),
             ft.Text("", size=12, color=ft.Colors.ERROR, expand=True)
         ],
         width=300,
@@ -16,7 +16,7 @@ def registro(page: ft.Page):
     email = ft.TextField(label="Correo Electrónico", keyboard_type=ft.KeyboardType.EMAIL, margin=ft.Margin(top=10))
     alert_email = ft.Row(
         [
-            ft.Icon(ft.Icons.ERROR_OUTLINE, size=12, color=ft.Colors.ERROR),
+            ft.Icon(ft.Icons.ERROR_OUTLINE, size=12, color=ft.Colors.ERROR, margin=ft.Margin(top=2)),
             ft.Text("", size=12, color=ft.Colors.ERROR, expand=True)
         ],
         width=300,
@@ -27,7 +27,7 @@ def registro(page: ft.Page):
     passw = ft.TextField(label="Contraseña", password=True, can_reveal_password=True, margin=ft.Margin(top=10))
     alert_passw = ft.Row(
         [
-            ft.Icon(ft.Icons.ERROR_OUTLINE, size=12, color=ft.Colors.ERROR),
+            ft.Icon(ft.Icons.ERROR_OUTLINE, size=12, color=ft.Colors.ERROR, margin=ft.Margin(top=2)),
             ft.Text("", size=12, color=ft.Colors.ERROR, expand=True)
         ],
         width=300,
