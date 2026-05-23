@@ -1,17 +1,13 @@
 import flet as ft
 from controllers.UsuarioCtrl import UsuarioCtrl
-from views.components.ClassButton import ClassButton
 
 def dashboard(page: ft.Page):
     def obtener_data(email, campo = "*"):
         return UsuarioCtrl().obtener_data(email, campo)
     
-    nombre_usuario = "Usuario"
-    if obtener_data(page.session.store.get("user"), "nombre"):
-        nombre_usuario = obtener_data(page.session.store.get("user"), "nombre")["nombre"] # type: ignore
-        
-        if len(nombre_usuario) > 10:
-            nombre_usuario.replace(nombre_usuario[-3], "...")
+    user = UsuarioCtrl().obtener_data(page.session.store.get("user"), "nombre")
+    nombre_usuario = "Usuario" if not user else user["nombre"] # type: ignore
+    nombre_usuario = nombre_usuario if len(nombre_usuario) <= 10 else nombre_usuario.replace(nombre_usuario[-3], "...")
     
     return ft.View(
         route="/dashboard",
@@ -20,7 +16,7 @@ def dashboard(page: ft.Page):
                 title=ft.Row(
                     [
                         ft.Image(
-                            "assets/images/onyx_dark.png" if page.platform_brightness == ft.Brightness.DARK else "assets/images/onyx_light.png",
+                            "assets/images/onyx_logo.png" if page.platform_brightness == ft.Brightness.DARK else "assets/images/onyx_light.png",
                             width=30,
                             color=ft.Colors.ON_SURFACE
                         ),

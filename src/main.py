@@ -12,6 +12,7 @@ def main(page: ft.Page):
     page.window.width = 350
     page.window.height = 650
     page.window.resizable = False
+    page.theme_mode = ft.ThemeMode.DARK
     
     def route_change():
         page.views.clear()

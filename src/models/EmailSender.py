@@ -19,7 +19,7 @@ class EmailSender:
                 contents = f"Tu código es: {codigo}"
             )
 
-            return True, "El código fue enviado exitosamente"
+            return True, "Enviado!"
 
         except Exception as err:
             print(f"Error: {err}")

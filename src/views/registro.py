@@ -80,7 +80,7 @@ def registro(page: ft.Page):
             alert_email,
             passw,
             alert_passw,
-            ft.Button(
+            ft.FilledButton(
                 ft.Text("Registrarme", size=15, weight=ft.FontWeight.W_500, color=ft.Colors.WHITE),
                 bgcolor="#5c71eb",
                 width=300,

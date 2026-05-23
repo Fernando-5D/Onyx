@@ -96,7 +96,7 @@ class UsuarioModel:
         
         except mysql.connector.Error as err:
             print(f"Error: {err}")
-            return False, "Hubo un error al intentar eliminar tu cuenta"
+            return False, "Hubo un error al intentar eliminar tu cuenta, intentalo otra vez"
         
         finally:
             cursor.close()

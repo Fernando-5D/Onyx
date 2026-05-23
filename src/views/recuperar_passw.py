@@ -24,37 +24,22 @@ def recuperar_passw(page: ft.Page):
         on_click=lambda e: page.run_task(enviar_codigo)
     )
     
-    status = ft.Text("Enviando...", size=20, color="#5c71eb", text_align=ft.TextAlign.CENTER)
-    button_aceptar = ft.FilledButton(
-        ft.Text("Esta bien", size=15, weight=ft.FontWeight.W_500, color=ft.Colors.WHITE),
-        bgcolor="#5c71eb",
-        style=ft.ButtonStyle(padding=15, shape=ft.RoundedRectangleBorder(radius=10)),
-        width=300,
-        visible=False,
-        on_click=lambda _: cerrar_alertSht()
-    )
-    
-    alertSht_enviar = ft.BottomSheet(
+    status = ft.Text("Enviando...", size=20, color="#5c71eb", weight=ft.FontWeight.W_500, text_align=ft.TextAlign.CENTER)
+    sheet_enviar = ft.BottomSheet(
         ft.Container(
             ft.Column(
                 [
-                    status,
-                    button_aceptar
+                    status
                 ],
                 spacing=20,
                 horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-                width=275,
                 tight=True
-            ),
+            ), 
+            width=300,
             padding=15
         ),
-        shape=ft.RoundedRectangleBorder(radius=ft.BorderRadius(15, 15, 0, 0)),
-        dismissible=False
+        shape=ft.RoundedRectangleBorder(radius=ft.BorderRadius(15, 15, 0, 0))
     )
-    
-    def cerrar_alertSht():
-        alertSht_enviar.open = False
-        page.update()
     
     codigo = ft.TextField(label="Codigo", keyboard_type=ft.KeyboardType.NUMBER, disabled=True)
     alert_codigo = ft.Row(
@@ -88,12 +73,11 @@ def recuperar_passw(page: ft.Page):
         on_click=lambda _: cambiar_passw()
     )
         
-    page.overlay.append(alertSht_enviar)
+    page.overlay.append(sheet_enviar)
     async def enviar_codigo():
         alert_email.visible = False
         status.value = "Enviando..."
         status.color = "#5c71eb"
-        button_aceptar.visible = False
         
         if not email.value:
             alert_email.controls[1].value = "Este campo es obligatorio" # type: ignore
@@ -101,7 +85,7 @@ def recuperar_passw(page: ft.Page):
         
         if email.value:
             email.disabled = True
-            alertSht_enviar.open = True
+            sheet_enviar.open = True
             page.update()
             
             page.session.store.set("code", random.randint(100000, 999999))
@@ -111,9 +95,9 @@ def recuperar_passw(page: ft.Page):
             
             status.value = mensaje
             if not is_valid:
-                status.color = ft.Colors.ERROR
+                status.color = ft.Colors.WHITE
                 email.disabled = False
-
+                
             else:
                 status.color = ft.Colors.LIGHT_GREEN
                 
@@ -127,9 +111,7 @@ def recuperar_passw(page: ft.Page):
                 button_cambiarPassw.content.color = ft.Colors.WHITE # type: ignore
                 button_cambiarPassw.bgcolor = "#5c71eb"
                 button_cambiarPassw.disabled = False
-                
         
-        button_aceptar.visible = True
         page.update()
 
     def cambiar_passw():
@@ -196,6 +178,7 @@ def recuperar_passw(page: ft.Page):
                 expand=True
             )
         ],
+        horizontal_alignment=ft.CrossAxisAlignment.CENTER,
         margin=ft.Margin(2),
         expand=True
     )
