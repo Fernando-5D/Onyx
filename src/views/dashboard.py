@@ -30,15 +30,15 @@ def dashboard(page: ft.Page):
                             ft.PopupMenuItem("Guardar y salir", ft.Icons.SAVE),
                             ft.PopupMenuItem("Descartar cambios", ft.Icon(ft.Icons.CLOSE, color=ft.Colors.ERROR))
                         ],
-                        bgcolor=ft.Colors.SURFACE_CONTAINER_LOW,
+                        bgcolor=ft.Colors.SURFACE_CONTAINER,
                         tooltip=""
                     ),
-                    ft.IconButton(ft.Icons.ARTICLE_OUTLINED, bgcolor=ft.Colors.SURFACE_CONTAINER_LOW),
-                    ft.IconButton(ft.Icons.DELETE, icon_color=ft.Colors.ERROR, bgcolor=ft.Colors.SURFACE_CONTAINER_LOW)
+                    ft.IconButton(ft.Icons.ARTICLE_OUTLINED, bgcolor=ft.Colors.SURFACE_CONTAINER),
+                    ft.IconButton(ft.Icons.DELETE, icon_color=ft.Colors.ERROR, bgcolor=ft.Colors.SURFACE_CONTAINER)
                 ]
             ),
             ft.Container(
-                ft.TextField("Sin Titulo", multiline=True, border=ft.InputBorder.NONE, expand=True),
+                ft.TextField(hint_text="Sin Titulo", multiline=True, border=ft.InputBorder.NONE, expand=True),
                 padding=ft.Padding(10, right=10)
             ),
             ft.Divider(),
@@ -83,7 +83,7 @@ def dashboard(page: ft.Page):
     ui()
     user = UsuarioCtrl().obtener_data(page.session.store.get("user"), "nombre")
     nombre_usuario = "Usuario" if not user else user["nombre"] # type: ignore
-    nombre_usuario = nombre_usuario if len(nombre_usuario) <= 10 else nombre_usuario.replace(nombre_usuario[-3], "...")
+    nombre_usuario = nombre_usuario if len(nombre_usuario) <= 10 else nombre_usuario[:7] + "..."
     
     return ft.View(
         route="/dashboard",
