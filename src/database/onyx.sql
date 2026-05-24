@@ -22,12 +22,12 @@ USE `onyx`;
 -- Volcando estructura para tabla onyx.paginas
 CREATE TABLE IF NOT EXISTS `paginas` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_usuario` int(11) NOT NULL,
-  `nombre` varchar(50) NOT NULL DEFAULT 'Titulo',
+  `email_usuario` varchar(255) NOT NULL DEFAULT '',
+  `nombre` varchar(50) NOT NULL DEFAULT 'Sin Titulo',
   `contenido` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `FK_paginas_usuarios` (`id_usuario`),
-  CONSTRAINT `FK_paginas_usuarios` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `FK_paginas_usuarios` (`email_usuario`) USING BTREE,
+  CONSTRAINT `FK_paginas_usuarios` FOREIGN KEY (`email_usuario`) REFERENCES `usuarios` (`email`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- La exportación de datos fue deseleccionada.
