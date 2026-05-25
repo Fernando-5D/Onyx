@@ -4,18 +4,40 @@ from models.Database import Database
 class PaginaModel:
     def __init__(self, db: Database):
         self.db = db
+    
+    def data(self, email):
+        try:
+            conn = self.db.get_connection()
+            cursor = conn.cursor(dictionary=True) # type: ignore
 
-    def crear(self, id_usuario, nombre, contenido):
+            cursor.execute(
+                """
+                SELECT * FROM paginas WHERE email_usuario = %s
+                """,
+                (email,)
+            )
+
+            return cursor.fetchall()
+
+        except mysql.connector.Error as err:
+            print(f"Error: {err}")
+            return None
+
+        finally:
+            cursor.close()
+            conn.close()
+    
+    def crear(self, email, nombre, contenido):
         try:
             conn = self.db.get_connection()
             cursor = conn.cursor()
 
             cursor.execute(
                 """
-                INSERT INTO paginas (id_usuario, nombre, contenido)
+                INSERT INTO paginas (email_usuario, nombre, contenido)
                 VALUES (%s, %s, %s)
                 """,
-                (id_usuario, nombre, contenido)
+                (email, nombre, contenido)
             )
 
             conn.commit()
