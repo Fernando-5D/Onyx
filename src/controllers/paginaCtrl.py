@@ -7,7 +7,6 @@ class PaginaCtrl:
     
     def obtener_pajina(self, email):
         return self.model.data(email)
-
     def crear_pagina(self, email, titulo, contenido):
         if contenido.strip() == "":
             return False, "El contenido no puede estar vacio"
