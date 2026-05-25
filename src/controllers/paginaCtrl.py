@@ -8,10 +8,10 @@ class PaginaCtrl:
     def obtener_pajina(self, email):
         return self.model.data(email)
 
-    def crear_pagina(self, email, nombre, contenido):
+    def crear_pagina(self, email, titulo, contenido):
         if contenido.strip() == "":
             return False, "El contenido no puede estar vacio"
-        return self.model.crear(email, nombre, contenido)
+        return self.model.crear(email, titulo, contenido)
 
     def editar_pagina(self, id_pagina, nombre, contenido):
         if nombre.strip() == "":

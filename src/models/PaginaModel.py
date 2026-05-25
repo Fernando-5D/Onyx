@@ -27,17 +27,17 @@ class PaginaModel:
             cursor.close()
             conn.close()
     
-    def crear(self, email, nombre, contenido):
+    def crear(self, email, titulo, contenido):
         try:
             conn = self.db.get_connection()
             cursor = conn.cursor()
 
             cursor.execute(
                 """
-                INSERT INTO paginas (email_usuario, nombre, contenido)
+                INSERT INTO paginas (email_usuario, titulo, contenido)
                 VALUES (%s, %s, %s)
                 """,
-                (email, nombre, contenido)
+                (email, titulo, contenido)
             )
 
             conn.commit()

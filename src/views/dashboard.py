@@ -3,23 +3,27 @@ from controllers.UsuarioCtrl import UsuarioCtrl
 from controllers.PaginaCtrl import PaginaCtrl
 
 def dashboard(page: ft.Page):
+    notas = [
+        ft.TextButton(
+            ft.Text(nota["titulo"], size=20, weight=ft.FontWeight.W_500),
+            style=ft.ButtonStyle(padding=15, shape=ft.RoundedRectangleBorder(radius=10)),
+            data=nota["id"]
+        ) for nota in PaginaCtrl().obtener_pajina(page.session.store.get("user")) # type: ignore
+    ]
+    
     panel_control_desk = ft.Container(
         ft.Column(
             [
                 ft.Text("Paginas", size=20, weight=ft.FontWeight.W_600),
                 ft.Divider(),
-                [
-                    ft.TextButton(
-                        ft.Text(nota.titulo, size=20, weight=ft.FontWeight.W_500),
-                        style=ft.ButtonStyle(padding=15, shape=ft.RoundedRectangleBorder(radius=10)),
-                        data=nota.id
-                    ) for nota in PaginaCtrl().obtener_pajina(page.session.store.get("user")) # type: ignore
-                ]
+                ft.Column(
+                    notas # type: ignore
+                )
             ],
         ),
         col=3,
         bgcolor=ft.Colors.SURFACE_CONTAINER,
-        height=425,
+        height=500,
         expand=True,
         padding=15,
         visible=True
@@ -203,6 +207,14 @@ def dashboard(page: ft.Page):
     
     def uardar():
         PaginaCtrl().crear_pagina(page.session.store.get("user"), titulo.value, contenido_editor.value)
+        notas = [
+            ft.TextButton(
+                ft.Text(nota["titulo"], size=20, weight=ft.FontWeight.W_500),
+                style=ft.ButtonStyle(padding=15, shape=ft.RoundedRectangleBorder(radius=10)),
+                data=nota["id"]
+            ) for nota in PaginaCtrl().obtener_pajina(page.session.store.get("user")) # type: ignore
+        ]
+        
         page.update()
     
     def cambiar_modo(e):

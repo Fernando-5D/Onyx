@@ -23,7 +23,7 @@ USE `onyx`;
 CREATE TABLE IF NOT EXISTS `paginas` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `email_usuario` varchar(255) NOT NULL DEFAULT '',
-  `nombre` varchar(50) NOT NULL DEFAULT 'Sin Titulo',
+  `titulo` varchar(50) NOT NULL DEFAULT 'Sin Titulo',
   `contenido` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_paginas_usuarios` (`email_usuario`) USING BTREE,
