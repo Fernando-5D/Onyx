@@ -29,3 +29,5 @@ La finalidad principal de la aplicación es apoyar a los usuarios en mejorar la 
    Fue implementado una funcion para recuperar la contraseña, se uso la biblioteca llamada yagmail para hacer esta funcion, se envio
    un codigo a el gmail puesto con un codigo para recueprar la contraseña
    ### **Revision 3**
+   Fue implementado las funciones CRUD parcialmente de crear y eliminar paginas
+   ### **Revision 4**
