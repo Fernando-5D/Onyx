@@ -1,5 +1,3 @@
-import flet as ft
-import random
 from pydantic import ValidationError
 from models.EmailSender import EmailSender
 from models.UsuarioModel import UsuarioModel
@@ -9,6 +7,9 @@ from models.schemas import UsuarioSesion_Schema, UsuarioRegistro_Schema, Usuario
 class UsuarioCtrl:
     def __init__(self):
         self.model = UsuarioModel(Database())
+    
+    def obtener_data(self, email, campo):
+        return self.model.data(email, campo)
     
     def iniciar_sesion(self, email, passw):
         try:
@@ -70,9 +71,6 @@ class UsuarioCtrl:
             
             elif "passw" in err.errors()[0]['loc']:
                 return False, "La contraseña debe tener entre 8 y 255 caracteres"
-    
-    def obtener_data(self, email, campo):
-        return self.model.data(email, campo)
     
     def eliminar_cuenta(self, email):
         return self.model.eliminar(email)

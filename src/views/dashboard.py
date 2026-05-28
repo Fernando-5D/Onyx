@@ -3,27 +3,32 @@ from controllers.UsuarioCtrl import UsuarioCtrl
 from controllers.PaginaCtrl import PaginaCtrl
 
 def dashboard(page: ft.Page):
-    notas = [
-        ft.TextButton(
-            ft.Text(nota["titulo"], size=20, weight=ft.FontWeight.W_500),
-            style=ft.ButtonStyle(padding=15, shape=ft.RoundedRectangleBorder(radius=10)),
-            data=nota["id"]
-        ) for nota in PaginaCtrl().obtener_pajina(page.session.store.get("user")) # type: ignore
-    ]
-    
     panel_control_desk = ft.Container(
         ft.Column(
             [
                 ft.Text("Paginas", size=20, weight=ft.FontWeight.W_600),
                 ft.Divider(),
-                ft.Column(
-                    notas # type: ignore
+                ft.ListView(
+                    [
+                        ft.Dismissible(
+                            ft.ListTile(
+                                    ft.Text(nota["titulo"], size=20, weight=ft.FontWeight.W_500),
+                                    data=nota["id"]
+                            ),
+                            background=ft.Container(
+                                    ft.Icon(ft.Icons.DELETE_OUTLINE, color=ft.Colors.WHITE, align=ft.Alignment.CENTER_RIGHT),
+                                    bgcolor=ft.Colors.RED,
+                                    padding=15
+                            ),
+                            dismiss_direction=ft.DismissDirection.END_TO_START,
+                            on_dismiss=lambda e: eliminar(e)
+                        ) for nota in PaginaCtrl().obtener_data(page.session.store.get("user")) # type: ignore
+                    ]
                 )
             ],
         ),
         col=3,
         bgcolor=ft.Colors.SURFACE_CONTAINER,
-        height=500,
         expand=True,
         padding=15,
         visible=True
@@ -47,12 +52,13 @@ def dashboard(page: ft.Page):
         True,
         ft.MarkdownExtensionSet.GITHUB_FLAVORED,
         ft.MarkdownCodeTheme.VS,
-        soft_line_break=False,
+        # soft_line_break=False,
         height=475,
+        expand=True,
         visible=False
     )
     
-    contenido_editor = ft.TextField(multiline=True, height=475, border=ft.InputBorder.NONE, expand=True)
+    contenido_editor = ft.TextField(multiline=True, border=ft.InputBorder.NONE, height=475, expand=True)
     
     editor = ft.Column(
         [
@@ -69,7 +75,7 @@ def dashboard(page: ft.Page):
                     ),
                     titulo,
                     contenido_modo,
-                    ft.IconButton(ft.Icons.SAVE_OUTLINED, bgcolor=ft.Colors.SURFACE_CONTAINER, on_click=lambda _: uardar()),
+                    ft.IconButton(ft.Icons.SAVE_OUTLINED, bgcolor=ft.Colors.SURFACE_CONTAINER, on_click=lambda _: crear()),
                     ft.IconButton(ft.Icons.DELETE_OUTLINE, icon_color=ft.Colors.ERROR, bgcolor=ft.Colors.SURFACE_CONTAINER)
                 ]
             ),
@@ -205,14 +211,44 @@ def dashboard(page: ft.Page):
         expand=True
     )
     
-    def uardar():
+    def crear():
         PaginaCtrl().crear_pagina(page.session.store.get("user"), titulo.value, contenido_editor.value)
-        notas = [
-            ft.TextButton(
-                ft.Text(nota["titulo"], size=20, weight=ft.FontWeight.W_500),
-                style=ft.ButtonStyle(padding=15, shape=ft.RoundedRectangleBorder(radius=10)),
-                data=nota["id"]
-            ) for nota in PaginaCtrl().obtener_pajina(page.session.store.get("user")) # type: ignore
+        
+        panel_control_desk.content.controls[2].controls = [ # type: ignore
+            ft.Dismissible(
+                ft.ListTile(
+                    ft.Text(nota["titulo"], size=20, weight=ft.FontWeight.W_500),
+                    data=nota["id"]
+                ),
+                background=ft.Container(
+                    ft.Icon(ft.Icons.DELETE_OUTLINE, color=ft.Colors.WHITE, align=ft.Alignment.CENTER_RIGHT),
+                    bgcolor=ft.Colors.RED,
+                    padding=15
+                ),
+                dismiss_direction=ft.DismissDirection.END_TO_START,
+                on_dismiss=lambda e: eliminar(e)
+            ) for nota in PaginaCtrl().obtener_data(page.session.store.get("user")) # type: ignore
+        ]
+        
+        page.update()
+    
+    def eliminar(e):
+        PaginaCtrl().eliminar_pagina(e.control.data)
+        
+        panel_control_desk.content.controls[2].controls = [
+            ft.Dismissible(
+                ft.ListTile(
+                    ft.Text(nota["titulo"], size=20, weight=ft.FontWeight.W_500),
+                    data=nota["id"]
+                ),
+                background=ft.Container(
+                    ft.Icon(ft.Icons.DELETE_OUTLINE, color=ft.Colors.WHITE, align=ft.Alignment.CENTER_RIGHT),
+                    bgcolor=ft.Colors.RED,
+                    padding=15
+                ),
+                dismiss_direction=ft.DismissDirection.END_TO_START,
+                on_dismiss=lambda e: eliminar(e)
+            ) for nota in PaginaCtrl().obtener_data(page.session.store.get("user")) # type: ignore
         ]
         
         page.update()

@@ -6,6 +6,22 @@ class UsuarioModel:
     def __init__(self, db: Database):
         self.db = db
     
+    def data(self, email, campo = "*"):
+        try:
+            conn = self.db.get_connection()
+            cursor = conn.cursor(dictionary=True) # type: ignore
+            
+            cursor.execute(f"SELECT {campo} FROM usuarios WHERE email = %s", (email,))
+            return cursor.fetchone() # type: ignore
+        
+        except mysql.connector.Error as err:
+            print(f"Error: {err}")
+            return None
+        
+        finally:
+            cursor.close()
+            conn.close() # type: ignore
+    
     def iniciar_sesion(self, email, passw):
         try:
             conn = self.db.get_connection()
@@ -64,22 +80,6 @@ class UsuarioModel:
         except Exception as e:
             print(e)
             return False, "Hubo un error al intentar actualizar tu contraseña"
-        
-        finally:
-            cursor.close()
-            conn.close() # type: ignore
-    
-    def data(self, email, campo = "*"):
-        try:
-            conn = self.db.get_connection()
-            cursor = conn.cursor(dictionary=True) # type: ignore
-            
-            cursor.execute(f"SELECT {campo} FROM usuarios WHERE email = %s", (email,))
-            return cursor.fetchone() # type: ignore
-        
-        except mysql.connector.Error as err:
-            print(f"Error: {err}")
-            return None
         
         finally:
             cursor.close()
