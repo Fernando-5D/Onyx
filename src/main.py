@@ -5,7 +5,7 @@ from views.registro import registro
 from views.dashboard import dashboard
 from views.usuario import usuario
 
-def main(page: ft.Page):
+def start(page: ft.Page):
     page.title = "Onyx"
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
@@ -34,4 +34,8 @@ def main(page: ft.Page):
     page.on_route_change = lambda _: route_change()
     page.go("/sesion")
 
-ft.app(main)
+def main():
+    ft.app(target=start)
+
+if __name__ == "__main__":
+    main()
