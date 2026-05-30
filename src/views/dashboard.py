@@ -38,7 +38,7 @@ def dashboard(page: ft.Page):
                             padding=15
                         ),
                         width=300,
-                        on_click=lambda e: eliminar(e)
+                        on_click=lambda _: eliminar()
                     ),
                     alert_eliminar
                 ],
@@ -313,7 +313,7 @@ def dashboard(page: ft.Page):
             PaginaCtrl().crear_pagina(page.session.store.get("user"), titulo.value, contenido_editor.value)
             update_panel()
     
-    def eliminar(e):
+    def eliminar():
         PaginaCtrl().eliminar_pagina(id=sheet_eliminar.data)
         cerrar_sheet()
         update_panel()
