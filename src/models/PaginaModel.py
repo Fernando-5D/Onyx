@@ -5,19 +5,22 @@ class PaginaModel:
     def __init__(self, db: Database):
         self.db = db
     
-    def data(self, email_usuario, id = None):
+    def data(self, email_usuario = None, id = None):
         try:
             conn = self.db.get_connection()
             cursor = conn.cursor(dictionary=True) # type: ignore
             
-            query = "SELECT * FROM paginas WHERE email_usuario = %s"
-            params = [email_usuario]
-            if id:
-                query += " AND id = %s"
+            query = "SELECT * FROM paginas WHERE "
+            params = []
+            if email_usuario:
+                query += "email_usuario = %s"
+                params.append(email_usuario)
+            elif id:
+                query += "id = %s"
                 params.append(id)
             
             cursor.execute(query, tuple(params))
-            return cursor.fetchone() if id else cursor.fetchall()
+            return cursor.fetchall() if email_usuario else cursor.fetchone()
 
         except mysql.connector.Error as err:
             print(f"Error: {err}")
@@ -25,12 +28,12 @@ class PaginaModel:
 
         finally:
             cursor.close()
-            conn.close()
+            conn.close() # type: ignore
     
     def crear(self, email_usuario, titulo = "Sin Titulo", contenido = ""):
         try:
             conn = self.db.get_connection()
-            cursor = conn.cursor()
+            cursor = conn.cursor() # type: ignore
 
             cursor.execute(
                 """INSERT INTO paginas (email_usuario, titulo, contenido)
@@ -38,7 +41,7 @@ class PaginaModel:
                 (email_usuario, titulo, contenido)
             )
 
-            conn.commit()
+            conn.commit() # type: ignore
             return True, ""
 
         except mysql.connector.Error as err:
@@ -47,16 +50,16 @@ class PaginaModel:
 
         finally:
             cursor.close()
-            conn.close()
+            conn.close() # type: ignore
 
 
     def editar(self, id, titulo = "Sin Titulo", contenido = ""):
         try:
             conn = self.db.get_connection()
-            cursor = conn.cursor()
+            cursor = conn.cursor() # type: ignore
 
             cursor.execute("UPDATE paginas SET titulo = %s, contenido = %s WHERE id = %s", (titulo, contenido, id))
-            conn.commit()
+            conn.commit() # type: ignore
             return True, ""
 
         except mysql.connector.Error as err:
@@ -65,22 +68,31 @@ class PaginaModel:
 
         finally:
             cursor.close()
-            conn.close()
+            conn.close() # type: ignore
 
 
-    def eliminar(self, id):
+    def eliminar(self, email_usuario = None, id = None):
         try:
             conn = self.db.get_connection()
-            cursor = conn.cursor()
-
-            cursor.execute("DELETE FROM paginas WHERE id = %s", (id,))
-            conn.commit()
-            return True, ""
+            cursor = conn.cursor() # type: ignore
+            
+            query = "DELETE FROM paginas WHERE "
+            params = []
+            if email_usuario:
+                query += "email_usuario = %s"
+                params.append(email_usuario)
+                
+            elif id:
+                query += "id = %s"
+                params.append(id)
+            
+            cursor.execute(query, tuple(params))
+            return conn.commit() # type: ignore
 
         except mysql.connector.Error as err:
             print(f"Error: {err}")
-            return False, "Hubo un error al intentar eliminar la pagina, prueba de nuevo"
+            return None
 
         finally:
             cursor.close()
-            conn.close()
+            conn.close() # type: ignore

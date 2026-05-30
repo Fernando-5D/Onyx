@@ -6,7 +6,7 @@ class PaginaCtrl:
     def __init__(self):
         self.model = PaginaModel(Database())
     
-    def obtener_data(self, email_usuario, id = None):
+    def obtener_data(self, email_usuario = None, id = None):
         return self.model.data(email_usuario, id)
 
     def crear_pagina(self, email_usuario, titulo, contenido):
@@ -15,5 +15,5 @@ class PaginaCtrl:
     def editar_pagina(self, id, titulo = "Sin Titulo", contenido = ""):
         return self.model.editar(id, titulo, contenido)
 
-    def eliminar_pagina(self, id):
-        return self.model.eliminar(id)
+    def eliminar_pagina(self, email_usuario = None, id = None):
+        return self.model.eliminar(email_usuario, id)

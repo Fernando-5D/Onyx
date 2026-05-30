@@ -26,7 +26,7 @@ def usuario(page: ft.Page):
                         ),
                         width=300,
                         margin=ft.Margin(top=25, bottom=5),
-                        on_click=lambda _: cerrar_alertD()
+                        on_click=lambda _: cerrar_sheet()
                     ),
                     ft.TextButton(
                         ft.Text("Eliminar mi cuenta", size=20, color=ft.Colors.RED, weight=ft.FontWeight.W_600),
@@ -52,11 +52,11 @@ def usuario(page: ft.Page):
     )
     
     page.overlay.append(sheet_eliminar)
-    def abrir_alertD():
+    def abrir_sheet():
         sheet_eliminar.open = True
         page.update()
     
-    def cerrar_alertD():
+    def cerrar_sheet():
         sheet_eliminar.open = False
         page.update()
     
@@ -131,7 +131,7 @@ def usuario(page: ft.Page):
                             padding=15
                         ),
                         width=300,
-                        on_click=lambda _: abrir_alertD()
+                        on_click=lambda _: abrir_sheet()
                     )
                 ],
                 horizontal_alignment=ft.CrossAxisAlignment.CENTER

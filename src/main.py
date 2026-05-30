@@ -9,8 +9,6 @@ def main(page: ft.Page):
     page.title = "Onyx"
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
-    page.window.width = 350
-    page.window.height = 650
     page.window.resizable = False
     page.theme_mode = ft.ThemeMode.DARK
     
