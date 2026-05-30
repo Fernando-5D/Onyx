@@ -1,5 +1,4 @@
 import flet as ft
-import asyncio
 from controllers.UsuarioCtrl import UsuarioCtrl
 from controllers.PaginaCtrl import PaginaCtrl
 from views.components.Pagina import Pagina
@@ -315,7 +314,8 @@ def dashboard(page: ft.Page):
             update_panel()
     
     def eliminar(e):
-        PaginaCtrl().eliminar_pagina(id=e.control.data)
+        PaginaCtrl().eliminar_pagina(id=sheet_eliminar.data)
+        cerrar_sheet()
         update_panel()
         
     def cambiar_modo(e):

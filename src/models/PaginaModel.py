@@ -23,6 +23,7 @@ class PaginaModel:
             return cursor.fetchall() if email_usuario else cursor.fetchone()
 
         except mysql.connector.Error as err:
+
             print(f"Error: {err}")
             return None
 
@@ -87,7 +88,7 @@ class PaginaModel:
                 params.append(id)
             
             cursor.execute(query, tuple(params))
-            return conn.commit() # type: ignore
+            conn.commit() # type: ignore
 
         except mysql.connector.Error as err:
             print(f"Error: {err}")

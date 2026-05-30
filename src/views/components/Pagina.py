@@ -10,6 +10,7 @@ class Pagina(ft.ResponsiveRow):
                     style=ft.ButtonStyle(padding=10, shape=ft.RoundedRectangleBorder(radius=15)),
                     width=300,
                     height=50,
+                    data=data,
                     on_click=paginaClick
                 ),
                 ft.PopupMenuButton(
@@ -18,6 +19,7 @@ class Pagina(ft.ResponsiveRow):
                         ft.PopupMenuItem(
                             ft.Text("Eliminar", weight=ft.FontWeight.W_400, margin=ft.Margin(3, bottom=3)),
                             ft.Icon(ft.Icons.DELETE_OUTLINE),
+                            data=data,
                             on_click=eliminarClick
                         )
                     ],
@@ -26,5 +28,3 @@ class Pagina(ft.ResponsiveRow):
                 )
             ]
         )
-        
-        self.data = data
