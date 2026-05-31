@@ -20,6 +20,7 @@ class PaginaModel:
                 params.append(id)
             
             cursor.execute(query, tuple(params))
+            
             return cursor.fetchall() if email_usuario else cursor.fetchone()
 
         except mysql.connector.Error as err:
