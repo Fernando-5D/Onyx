@@ -24,11 +24,11 @@ CREATE TABLE IF NOT EXISTS `paginas` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `email_usuario` varchar(255) NOT NULL,
   `titulo` varchar(50) NOT NULL DEFAULT 'Sin Titulo',
-  `contenido` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `contenido` longtext NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_paginas_usuarios` (`email_usuario`) USING BTREE,
   CONSTRAINT `FK_paginas_usuarios` FOREIGN KEY (`email_usuario`) REFERENCES `usuarios` (`email`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- La exportación de datos fue deseleccionada.
 
