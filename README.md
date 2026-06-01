@@ -30,3 +30,6 @@ La finalidad principal de la aplicación es apoyar a los usuarios en mejorar la 
    un codigo a el gmail puesto con un codigo para recueprar la contraseña
    ### **Revision 3**
    Fue implementado las funciones CRUD parcialmente de crear y eliminar paginas
+   ### **Revision 4**
+   Programa completo organizador de paginas con markdown, permite editar, crear y eliminar las paginas creadas
+   
